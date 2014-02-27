@@ -1,0 +1,73 @@
+package search;
+
+
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Stack;
+
+import rp13.search.problem.puzzle.EightPuzzle;
+import rp13.search.problem.puzzle.EightPuzzle.PuzzleMove;
+import rp13.search.problem.puzzle.EightPuzzleSuccessorFunction;
+import rp13.search.util.ActionStatePair;
+
+
+public class EightPuzzleDFS {
+	
+	private final EightPuzzle m_state;
+	
+	public EightPuzzleDFS(EightPuzzle _state) {
+		m_state = _state;
+	}
+	
+	
+
+	
+	public void bfs(EightPuzzle state) {
+		EightPuzzleSuccessorFunction sf = new EightPuzzleSuccessorFunction();
+		List<ActionStatePair<PuzzleMove, EightPuzzle>> successors = new ArrayList<ActionStatePair<PuzzleMove, EightPuzzle>>();
+		List<EightPuzzle> explored = new ArrayList<EightPuzzle>();
+		
+		Stack<EightPuzzle> stack = new Stack<EightPuzzle>();
+		stack.add(state);
+		System.out.println(state);
+		
+		while(!stack.isEmpty()) {
+			EightPuzzle parentState = stack.pop();
+			explored.add(parentState);
+			sf.getSuccessors(parentState, successors);
+			
+			for (ActionStatePair<PuzzleMove, EightPuzzle> successor : successors) {
+				if(explored.contains(successor.getState())) {
+					continue;
+				} else if(successor.getState().equals(EightPuzzle.orderedEightPuzzle())) {
+					System.out.println(successor.getState());
+					System.exit(0);
+				} else {
+					System.out.println(successor);
+					explored.add(successor.getState());
+					stack.push(successor.getState());
+				}
+				
+			}
+		}
+		
+		
+	}
+	
+	
+	
+	
+	public static void main(String[] args) {
+		EightPuzzle state = EightPuzzle.randomEightPuzzle();
+
+		EightPuzzleBFS epbfs = new EightPuzzleBFS(state);
+		epbfs.bfs(state);
+		
+	
+
+		
+		
+	}
+	
+}
