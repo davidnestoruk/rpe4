@@ -1,43 +1,48 @@
 package search;
 
 
-import java.util.LinkedList;
 import java.util.List;
-import java.util.Queue;
 import java.util.ArrayList;
-
 import rp13.search.interfaces.Agenda;
 import rp13.search.interfaces.SuccessorFunction;
-import rp13.search.problem.puzzle.EightPuzzle;
-import rp13.search.problem.puzzle.EightPuzzleSuccessorFunction;
-import rp13.search.problem.puzzle.EightPuzzle.PuzzleMove;
 import rp13.search.util.ActionStatePair;
 
 
-public class UninformedSearch {
+public class UninformedSearch<StateT, ActionT> {
+	
+	StateT startState;
+	StateT goalState;
+	Agenda<StateT> agenda;
+	SuccessorFunction<ActionT, StateT> sf;
+	
+	public UninformedSearch(StateT _startState, StateT _goalState, Agenda<StateT> _agenda, SuccessorFunction<ActionT, StateT> _sf) {
+		this.startState = _startState;
+		this.goalState = _goalState;
+		this.agenda = _agenda;
+		this.sf = _sf;
+	}
 
-	public void search(Object state, Agenda<Object> agenda, SuccessorFunction sf) {
+	public void search() {
 		
-		List<ActionStatePair<PuzzleMove, EightPuzzle>> successors = new ArrayList<ActionStatePair<PuzzleMove, EightPuzzle>>();
-		List<EightPuzzle> explored = new ArrayList<EightPuzzle>();
+		List<ActionStatePair<ActionT, StateT>> successors = new ArrayList<ActionStatePair<ActionT, StateT>>();
+		List<StateT> explored = new ArrayList<StateT>();
 		
-		
-		agenda.push(state);
-		System.out.println(state);
+		agenda.push(startState);
+		System.out.println(startState);
 		
 		while(!agenda.isEmpty()) {
-			parentState = agenda.pop();
+			StateT parentState = agenda.pop();
 			explored.add(parentState);
 			sf.getSuccessors(parentState, successors);
 			
-			for (ActionStatePair<PuzzleMove, EightPuzzle> successor : successors) {
+			for (ActionStatePair<ActionT, StateT> successor : successors) {
 				if(explored.contains(successor.getState())) {
 					continue;
-				} else if(successor.getState().equals(EightPuzzle.orderedEightPuzzle())) {
+				} else if(successor.getState().equals(goalState)) {
 					System.out.println(successor.getState());
 					System.exit(0);
 				} else {
-					System.out.println(successor);
+					//System.out.println(successor);
 					explored.add(successor.getState());
 					agenda.push(successor.getState());
 				}
@@ -48,19 +53,5 @@ public class UninformedSearch {
 		
 	}
 	
-	
-	
-	
-	public static void main(String[] args) {
-		EightPuzzle state = EightPuzzle.randomEightPuzzle();
-
-		EightPuzzleBFS epbfs = new EightPuzzleBFS(state);
-		epbfs.search(state);
-		
-	
-
-		
-		
-	}
 	
 }
