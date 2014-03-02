@@ -42,7 +42,7 @@ public class UninformedSearch<StateT, ActionT> {
 					System.out.println(successor.getState());
 					System.exit(0);
 				} else {
-					//System.out.println(successor);
+					System.out.println(successor);
 					explored.add(successor.getState());
 					agenda.push(successor.getState());
 				}
