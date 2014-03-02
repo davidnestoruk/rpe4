@@ -14,6 +14,8 @@ public class StringJumble {
 	
 	private final String originalString;
 	public String currentString;
+	private int firstIndex = 0;
+	private int secondIndex = 0;
 
 	/**
 	 * Constructor
@@ -24,39 +26,8 @@ public class StringJumble {
 		this.originalString = originalString;
 		this.currentString = originalString;
 	}
-	
-	/**
-	 * Explicit enumeration of swaps the string can take.
-	 * 
-	 * @author DavidNestoruk
-	 */
-	public enum StringMove {
-		ZEROONE(0, 1), ZEROTWO(0, 2), ZEROTHREE(0, 3), ONETWO(1, 2), ONETHREE(1, 3), TWOTHREE(2, 3);
-		
-		private final int firstIndex;
-		private final int secondIndex;
-		
-		private StringMove(int firstIndex, int secondIndex) {
-			this.firstIndex = firstIndex;
-			this.secondIndex = secondIndex;
-		}
-		
-		private static final StringMove[] VALUES = values();
-		
-		private static final int SIZE = VALUES.length;
-		
-		private static final Random RANDOM = new Random();
-		
-		public static StringMove randomMove() {
-			int pick = (int) Math.max(
-					Math.ceil(RANDOM.nextDouble() * SIZE) - 1, 0);
 
-			return VALUES[pick];
-		}
-	}
-	
-	
-	
+
 	/**
 	 * Creates a string with the value of the original string at object creation.
 	 * 
@@ -101,16 +72,16 @@ public class StringJumble {
 	 * 
 	 * @param move The move which is to be applied to the string.
 	 */
-	public void makeMove(StringMove move) {
+	public void makeMove(int firstIndex, int secondIndex) {
 		// Splits the characters of that string up into a character array.
 		char[] chars = currentString.toCharArray();
 		
 		// Saves the character at firstIndex into a temporary variable.
-		char temp = chars[move.firstIndex];
+		char temp = chars[firstIndex];
 		
 		// Swaps the two characters.
-		chars[move.firstIndex] = chars[move.secondIndex];
-		chars[move.secondIndex] = temp;
+		chars[firstIndex] = chars[secondIndex];
+		chars[secondIndex] = temp;
 		
 		// Changes the current string variable to the newly modified string.
 		currentString = new String(chars);
@@ -121,8 +92,14 @@ public class StringJumble {
 	 * Swaps two characters in the currentString at two random indices.
 	 */
 	public void randomMove() {
-		StringMove move = StringMove.randomMove();
-		makeMove(move);
+		Random RANDOM = new Random();
+		firstIndex = RANDOM.nextInt(originalString.length());
+		if(firstIndex == secondIndex) {
+			secondIndex = RANDOM.nextInt(originalString.length());	
+		}
+		
+		makeMove(firstIndex, secondIndex);
+		
 	}
 	
 	@Override
