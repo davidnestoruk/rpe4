@@ -6,9 +6,9 @@ import java.util.Queue;
 import rp13.search.interfaces.Agenda;
 
 
-public class AgendaQueue implements Agenda<Object> {
+public class AgendaQueue<ActionStatePair> implements Agenda<ActionStatePair> {
 
-	Queue<Object> queue = new LinkedList<Object>();
+	Queue<ActionStatePair> queue = new LinkedList<ActionStatePair>();
 	
 	@Override
 	public Iterator iterator() {
@@ -16,12 +16,12 @@ public class AgendaQueue implements Agenda<Object> {
 	}
 
 	@Override
-	public void push(Object _item) {
+	public void push(ActionStatePair _item) {
 		queue.add(_item);
 	}
 
 	@Override
-	public Object pop() {
+	public ActionStatePair pop() {
 		return queue.remove();
 	}
 
@@ -35,7 +35,7 @@ public class AgendaQueue implements Agenda<Object> {
 	}
 
 	@Override
-	public boolean contains(Object _item) {
+	public boolean contains(ActionStatePair _item) {
 		if(queue.contains(_item)) {
 			return true;
 		} else {
