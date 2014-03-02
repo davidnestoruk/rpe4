@@ -5,9 +5,9 @@ import java.util.Stack;
 import rp13.search.interfaces.Agenda;
 
 
-public class AgendaStack implements Agenda<Object> {
+public class AgendaStack<ActionStatePair> implements Agenda<ActionStatePair> {
 	
-	Stack<Object> stack = new Stack<Object>();
+	Stack<ActionStatePair> stack = new Stack<ActionStatePair>();
 
 	@Override
 	public Iterator iterator() {
@@ -15,12 +15,12 @@ public class AgendaStack implements Agenda<Object> {
 	}
 
 	@Override
-	public void push(Object _item) {
+	public void push(ActionStatePair _item) {
 		stack.push(_item);
 	}
 	
 	@Override
-	public Object pop() {
+	public ActionStatePair pop() {
 		return stack.pop();
 	}
 
@@ -34,7 +34,7 @@ public class AgendaStack implements Agenda<Object> {
 	}
 
 	@Override
-	public boolean contains(Object _item) {
+	public boolean contains(ActionStatePair _item) {
 		if(stack.contains(_item)) {
 			return true;
 		} else {
