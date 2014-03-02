@@ -1,0 +1,143 @@
+package agendas;
+
+import org.testng.annotations.Test;
+
+import static org.testng.AssertJUnit.assertEquals;
+
+import org.testng.annotations.BeforeMethod;
+
+import rp13.search.problem.puzzle.EightPuzzle;
+import rp13.search.util.ActionStatePair;
+import stringJumble.StringJumble;
+
+/**
+ * A test class for the agendas
+ * @author Tom
+ *
+ */
+@Test
+public class AgendaTest {
+
+	private AgendaQueue<EightPuzzle> q1;
+	private AgendaQueue<StringJumble> q2;
+	private AgendaStack<EightPuzzle> s1;
+	private EightPuzzle e1;
+	private EightPuzzle e2;
+	private StringJumble sj1;
+
+	@BeforeMethod
+	public void beforeMethod() {
+
+		q1 = new AgendaQueue<EightPuzzle>();
+		q2 = new AgendaQueue<StringJumble>();
+		s1 = new AgendaStack<EightPuzzle>();
+		e1 = EightPuzzle.randomEightPuzzle();
+		e2 = EightPuzzle.orderedEightPuzzle();
+		sj1 = StringJumble.randomString("java");
+	}
+	
+	/**
+	 * A test for push on a queue
+	 * The queue will be empty at first, when push is called the queue should contain e1
+	 */
+	public void queuePush() {
+
+		assertEquals(true, q1.isEmpty());
+		q1.push(e1);
+		assertEquals(true, q1.contains(e1));
+
+	}
+
+	/**
+	 * A test for pop on a queue
+	 * The element e1 is pushed, when pop is called the element should be returned
+	 */
+	public void queuePop() {
+
+		q1.push(e1);
+		assertEquals(e1, q1.pop());
+
+	}
+
+	/**
+	 * A test for isEmpty on a queue
+	 * Queue should be empty then not empty after sj1 is pushed
+	 */
+	public void queueIsEmpty() {
+
+		assertEquals(true, q2.isEmpty());
+
+		q2.push(sj1);
+
+		assertEquals(false, q2.isEmpty());
+
+	}
+	
+	/**
+	 * A test for contains on a queue
+	 * q1 should contain e1 and not contain e2
+	 */
+	public void queueContains() {
+
+		q1.push(e1);
+
+		assertEquals(true, q1.contains(e1));
+
+		assertEquals(false, q1.contains(e2));
+	}
+
+	
+	/**
+	 * A test for push on a stack
+	 * s1 should be empty, when the push is called s1 should contain that element
+	 */
+	public void stackPush(){
+		
+		assertEquals(true, s1.isEmpty());
+		
+		s1.push(e2);
+		
+		assertEquals(true, s1.contains(e2));
+		
+	}
+	
+	/**
+	 * A test for pop on a stack
+	 * e2 is pushed into the stack, pop should return e2
+	 */
+	public void stackPop(){
+		
+		s1.push(e2);
+		
+		assertEquals(e2, s1.pop());
+	}
+	
+	/**
+	 * A test for isempty on a stack
+	 * s1 should be empty, then not empty
+	 */
+	public void stackIsEmpty(){
+		
+		assertEquals(true, s1.isEmpty());
+		
+		s1.push(e1);
+		
+		assertEquals(false, s1.isEmpty());
+		
+	}
+	
+	/**
+	 * A test for contains on a stack
+	 * s1 should contain e1 and not contain e2
+	 */
+	public void stackContains(){
+		
+		s1.push(e1);
+		
+		assertEquals(true, s1.contains(e1));
+		
+		assertEquals(false, s1.contains(e2));
+		
+	}
+	
+}
