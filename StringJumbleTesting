@@ -1,0 +1,89 @@
+package stringJumble;
+
+import org.testng.annotations.Test;
+import static org.testng.AssertJUnit.assertEquals;
+import org.testng.annotations.BeforeMethod;
+
+@Test
+public class StringJumbleTest {
+
+	private StringJumble s1;
+	private StringJumble s2;
+	
+	
+	@BeforeMethod
+	public void setUp() {
+		
+		
+		s1 = new StringJumble("beauty");
+		s2 = new StringJumble("robots");
+	
+	}
+
+	
+	public void orderedStringTest(){
+		
+		s1.randomMove();
+		s1 = s1.orderedString("beauty");
+		
+		assertEquals(s1.toString(), "beauty");
+		
+	}
+	
+	public void randomStringTest(){
+		
+		s1 = s1.orderedString("beauty");
+		
+		StringJumble s1temp = s1.randomString("beauty");
+	
+	
+		assertEquals(s1.equals(s1temp), false);
+	}
+	
+	public void makeMove() {
+		
+		s1.makeMove(0, 1);
+		
+		assertEquals("ebauty", s1.toString());
+		
+	}
+	
+	public void randomMoveTest(){
+	
+		
+		s2.randomMove();
+		
+		
+		assertEquals(s2.toString().equals("robots"), false );
+		
+		
+	}
+	
+	
+	public void toStringTest(){
+		
+		assertEquals("robots", s2.toString());
+		
+	}
+	
+	public void equalsTest(){
+		
+		assertEquals(s1.equals(s2), false);
+		
+	    assertEquals(s2.equals(s2), true);
+		
+		
+	
+	}
+	
+	public void stringjumblemoveTest(){
+		
+		StringJumbleMove sjm = new StringJumbleMove(0, 2);
+		
+	
+		
+		
+	}
+	
+}
+
