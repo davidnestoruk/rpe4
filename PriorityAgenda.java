@@ -1,39 +1,46 @@
 package agendas;
 
+
+import java.util.Comparator;
 import java.util.Iterator;
+import java.util.PriorityQueue;
 
-import rp13.search.interfaces.SortedAgenda;
+import rp13.search.interfaces.Agenda;
 
-public class PriorityAgenda<ActionT, StateT> implements SortedAgenda<ASPComparable<ActionT, StateT>> {
-
+public class PriorityAgenda<ActionStatePair> implements Agenda<ActionStatePair> {
+	
+	Comparator compare = new QueueComparator();
+	PriorityQueue<ActionStatePair> queue = new PriorityQueue<ActionStatePair>(10, compare);
+	
 	@Override
-	public void push(ASPComparable<ActionT, StateT> _item) {
-		
+	public Iterator<ActionStatePair> iterator() {
+		return queue.iterator();
 	}
-
 	@Override
-	public ASPComparable<ActionT, StateT> pop() {
-		return null;
+	public void push(ActionStatePair _item) {
+		queue.add(_item);
 	}
-
+	
+	@Override
+	public ActionStatePair pop() {
+		return queue.remove();
+	}
 	@Override
 	public boolean isEmpty() {
-		return false;
+		if(queue.isEmpty()) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+	@Override
+	public boolean contains(ActionStatePair _item) {
+		if(queue.contains(_item)) {
+			return true;
+		} else {
+			return false;
+		}
 	}
 
-	@Override
-	public boolean contains(ASPComparable<ActionT, StateT> _item) {
-		return false;
-	}
-
-	@Override
-	public Iterator<ASPComparable<ActionT, StateT>> iterator() {
-		return null;
-	}
-
-	@Override
-	public void sort() {
-		
-	}
 
 }
