@@ -1,0 +1,56 @@
+package search;
+
+import rp13.search.interfaces.SuccessorFunction;
+import rp13.search.problem.puzzle.EightPuzzle;
+import rp13.search.problem.puzzle.EightPuzzle.PuzzleMove;
+import rp13.search.problem.puzzle.EightPuzzleSuccessorFunction;
+import rp13.search.util.ActionStatePair;
+import stringJumble.StringJumble;
+import stringJumble.StringJumbleMove;
+import stringJumble.StringJumbleSuccessorFunction;
+import agendas.PriorityAgenda;
+
+public class GenericISearchTest {
+	
+	public static void main(String[] args) {
+		
+		//EightPuzzleTest();
+		StringJumbleTest();
+		
+	}
+	
+	/**
+	 * Tests searches on the StringJumble class.
+	 */
+	private static void StringJumbleTest() {
+		String word = "hello this is a test jumble";
+		
+		StringJumble startState = StringJumble.randomString(word);
+		StringJumble goalState = StringJumble.orderedString(word);
+		SuccessorFunction<StringJumbleMove, StringJumble> sf = new StringJumbleSuccessorFunction();
+		
+		/* A* SEARCH */
+		PriorityAgenda<ActionStatePair<StringJumbleMove, StringJumble>> agenda = new PriorityAgenda<ActionStatePair<StringJumbleMove, StringJumble>>();
+		
+		
+		InformedSearch<StringJumble, StringJumbleMove> informed;
+		informed = new InformedSearch<StringJumble, StringJumbleMove>(startState, goalState, agenda, sf);
+		informed.search();
+	}
+	
+	/**
+	 * Tests searches on the EightPuzzle class.
+	 */
+	private static void EightPuzzleTest() {
+		EightPuzzle startState = EightPuzzle.randomEightPuzzle();
+		EightPuzzle goalState = EightPuzzle.orderedEightPuzzle();
+		SuccessorFunction<PuzzleMove, EightPuzzle> sf = new EightPuzzleSuccessorFunction();
+		
+		/* A* SEARCH */
+		PriorityAgenda<ActionStatePair<PuzzleMove, EightPuzzle>> agenda = new PriorityAgenda<ActionStatePair<PuzzleMove, EightPuzzle>>();
+		
+		InformedSearch<EightPuzzle, PuzzleMove> informed;
+		informed = new InformedSearch<EightPuzzle, PuzzleMove>(startState, goalState, agenda, sf);
+		informed.search();
+	}
+}
