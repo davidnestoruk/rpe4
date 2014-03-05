@@ -21,6 +21,7 @@ public class AgendaTest {
 	private AgendaQueue<EightPuzzle> q1;
 	private AgendaQueue<StringJumble> q2;
 	private AgendaStack<EightPuzzle> s1;
+	private PriorityAgenda<StringJumble> p1;
 	private EightPuzzle e1;
 	private EightPuzzle e2;
 	private StringJumble sj1;
@@ -31,11 +32,13 @@ public class AgendaTest {
 		q1 = new AgendaQueue<EightPuzzle>();
 		q2 = new AgendaQueue<StringJumble>();
 		s1 = new AgendaStack<EightPuzzle>();
+		p1 = new PriorityAgenda<StringJumble>();
 		e1 = EightPuzzle.randomEightPuzzle();
 		e2 = EightPuzzle.orderedEightPuzzle();
 		sj1 = StringJumble.randomString("java");
 	}
 	
+
 	/**
 	 * A test for push on a queue
 	 * The queue will be empty at first, when push is called the queue should contain e1
@@ -140,4 +143,56 @@ public class AgendaTest {
 		
 	}
 	
+	/**
+	 * A test class for push on priority agenda
+	 * SHould contain sj1 and not be null
+	 */
+	public void priorityPush(){
+		
+		p1.push(sj1);
+		
+		assertEquals(true, p1.contains(sj1));
+		
+		assertEquals(false, p1.contains(null));
+	}
+
+	/**
+	 * A test class for pop on priority agenda
+	 * should return sj1
+	 */
+	public void priorityPop(){
+		
+		p1.push(sj1);
+		
+		assertEquals(p1.pop(), sj1);
+	}
+	
+	
+	/**
+	 * A test class for is empty on priority agenda
+	 * should be empty then not empty
+	 */
+	public void priorityisEmpty(){
+		
+		assertEquals(true, p1.isEmpty());
+		
+		p1.push(sj1);
+		
+		assertEquals(false, p1.isEmpty());
+	}
+	
+	
+	
+	/**
+	 * A test class for contains on priority contains
+	 * should not contain sj1, then should
+	 */
+	public void priorityContains(){
+		
+		assertEquals(false, p1.contains(sj1));
+		
+		p1.push(sj1);
+		
+		assertEquals(true,p1.contains(sj1));
+	}
 }
