@@ -3,7 +3,11 @@ package stringJumble;
 import org.testng.annotations.Test;
 import static org.testng.AssertJUnit.assertEquals;
 import org.testng.annotations.BeforeMethod;
-
+/**
+ * Test Class for string jumble
+ * @author Tom
+ *
+ */
 @Test
 public class StringJumbleTest {
 
@@ -20,7 +24,9 @@ public class StringJumbleTest {
 	
 	}
 
-	
+	/**
+	 * Test for ordered string method
+	 */
 	public void orderedStringTest(){
 		
 		s1.randomMove();
@@ -30,6 +36,9 @@ public class StringJumbleTest {
 		
 	}
 	
+	/**
+	 * Test for random string method
+	 */
 	public void randomStringTest(){
 		
 		s1 = s1.orderedString("beauty");
@@ -40,6 +49,9 @@ public class StringJumbleTest {
 		assertEquals(s1.equals(s1temp), false);
 	}
 	
+	/**
+	 * Test for make move method
+	 */
 	public void makeMove() {
 		
 		s1.makeMove(0, 1);
@@ -48,6 +60,9 @@ public class StringJumbleTest {
 		
 	}
 	
+	/**
+	 * Test for random move method
+	 */
 	public void randomMoveTest(){
 	
 		
@@ -59,13 +74,18 @@ public class StringJumbleTest {
 		
 	}
 	
-	
+	/**
+	 * Test for toString method
+	 */
 	public void toStringTest(){
 		
 		assertEquals("robots", s2.toString());
 		
 	}
 	
+	/**
+	 * Test for equals method
+	 */
 	public void equalsTest(){
 		
 		assertEquals(s1.equals(s2), false);
@@ -76,14 +96,6 @@ public class StringJumbleTest {
 	
 	}
 	
-	public void stringjumblemoveTest(){
-		
-		StringJumbleMove sjm = new StringJumbleMove(0, 2);
-		
-	
-		
-		
-	}
 	
 }
 
