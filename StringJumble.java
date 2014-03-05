@@ -1,7 +1,7 @@
 package stringJumble;
 
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.Collections;
 import java.util.Random;
 
 /**
@@ -52,13 +52,13 @@ public class StringJumble {
 		for(char c : _originalString.toCharArray()) {
 			chars.add(c);
 		}
+				
+		// Shuffles the arraylist.
+		Collections.shuffle(chars);
 		
-		// While the chars arraylist is not empty, appends a random character to a new string.
-		while(!chars.isEmpty()) {
-			int listSize = chars.size();
-			int randomIndex = RANDOM.nextInt(listSize);
-			sb.append(chars.get(randomIndex));
-			chars.remove(randomIndex);
+		// Loops through randomized character array appending each character to a string.
+		for (Character c : chars) {
+			sb.append(c);
 		}
 		
 		StringJumble jumbledString = new StringJumble(sb.toString());
@@ -120,5 +120,11 @@ public class StringJumble {
 		}
 		
 		return false;
+	}
+
+	// TESTING
+	public static void main(String[] args) {
+		StringJumble sj = new StringJumble("antidisestablishmentarianism");
+		System.out.println(randomString("antidisestablishmentarianism"));
 	}
 }
