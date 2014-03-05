@@ -3,17 +3,20 @@
  */
 package rp13.search.util;
 
+
+
 /**
  * A class to store an action and the state it has produced together.
  * 
  * @author nah
  * 
  */
-public class ActionStatePair<ActionT, StateT> {
+public class ActionStatePair<ActionT, StateT> implements Comparable<ActionStatePair<ActionT, StateT>>{
 
 	private final ActionT m_action;
 	private final StateT m_state;
 	private ActionStatePair<ActionT, StateT> m_parent;
+	private int hValue = 0;
 
 	/**
 	 * Construct the pair from input values.
@@ -58,6 +61,22 @@ public class ActionStatePair<ActionT, StateT> {
 	public void setParent(ActionStatePair<ActionT, StateT> m_asp) {
 		this.m_parent = m_asp;
 	}
+	
+	/**
+	 * Sets the heuristic value.
+	 * @param hValue The heuristic value to be set.
+	 */
+	public void setHValue(int hValue) {
+		this.hValue = hValue;
+	}
+	
+	/**
+	 * Returns the heuristic value.
+	 * @return Returns the heuristic value.
+	 */
+	public int getHValue() {
+		return this.hValue;
+	}
 
 	
 	@Override 
@@ -81,6 +100,30 @@ public class ActionStatePair<ActionT, StateT> {
 		}
 
 		return sb.toString();
+	}
+
+	@Override
+	public int compareTo(ActionStatePair<ActionT, StateT> asp) {
+		// Initialises the equal chars variable.
+		int equalChars = 0;
+		
+		// Stores the string value of both node states into variables
+		String thisString = this.getState().toString();
+		String thatString = asp.getState().toString();
+		
+		// Converts both strings to character arrays.
+		char[] thisArray = thisString.toCharArray();
+		char[] thatArray = thatString.toCharArray();
+		
+		// Loops through arrays checking how many characters are in the same position.
+		for(int i=0; i<thisString.length(); i++) {
+			if(thisArray[i] != thatArray[i]) {
+				equalChars++;
+			}
+		}
+		
+		// Returns the amount of characters in the same position.
+		return equalChars;
 	}
 	
 
