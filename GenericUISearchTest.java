@@ -9,13 +9,14 @@ import stringJumble.StringJumble;
 import stringJumble.StringJumbleMove;
 import stringJumble.StringJumbleSuccessorFunction;
 import agendas.AgendaQueue;
+import agendas.AgendaStack;
 
-public class GenericSearchTest {
+public class GenericUISearchTest {
 	
 	public static void main(String[] args) {
 		
-		EightPuzzleTest();
-		//StringJumbleTest();
+		//EightPuzzleTest();
+		StringJumbleTest();
 		
 	}
 	
@@ -23,7 +24,7 @@ public class GenericSearchTest {
 	 * Tests searches on the StringJumble class.
 	 */
 	private static void StringJumbleTest() {
-		String word = "test";
+		String word = "antidisestablishmentarianism";
 		
 		StringJumble startState = StringJumble.randomString(word);
 		StringJumble goalState = StringJumble.orderedString(word);
