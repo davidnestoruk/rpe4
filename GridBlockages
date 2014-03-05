@@ -1,0 +1,35 @@
+// Co-Ordinates are with reference from the top left
+// as if standing near the whiteboard looking at the thermometer
+// the grid is 8x10 boxes and therefore 9x11 nodes
+// for example 1,1 is the bottom right hand corner of the top left most box
+// or one node right , one node down
+// the data is arranged (X COORD,Y COORD,BLOCKED MOVE)
+
+(2,1,GridMove.DOWN)
+(3,1,GridMove.RIGHT)
+(4,1,GridMove.LEFT)
+(1,2,GridMove.DOWN)
+(2,2,GridMove.UP)
+(1,3,GridMove.UP)
+(3,3,GridMove.RIGHT)
+(4,3,GridMove.LEFT)
+(4,3,GridMove.DOWN)
+(6,3,GridMove.UP)
+(4,4,GridMove.UP)
+(7,4,GridMove.DOWN)
+(2,5,GridMove.DOWN)
+(3,5,GridMove.DOWN)
+(5,5,GridMove.DOWN)
+(1,6,GridMove.DOWN)
+(2,6,GridMove.UP)
+(3,6,GridMove.UP)
+(5,6,GridMove.UP
+(3,6,GridMove.RIGHT)
+(6,6,GridMove.RIGHT)
+(4,6,GridMove.LEFT)
+(7,6,GridMove.LEFT)
+(1,7,GridMove.UP)
+(5,7,GridMove.DOWN)
+(6,7,GridMove.DOWN)
+(5,8,GridMove.UP)
+(6,8,GridMove.UP)
