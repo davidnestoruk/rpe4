@@ -1,5 +1,6 @@
 package gridPuzzle;
 
+import java.util.ArrayList;
 import java.util.Random;
 
 public class GridPuzzle {
@@ -53,6 +54,9 @@ public class GridPuzzle {
 	int agent_x;
 	int agent_y;
 	
+	//Initialises blocks array
+	ArrayList<Block<GridMove>> blocks;
+	
 	/**
 	 * Constructor
 	 * @param x The width of the grid.
@@ -65,14 +69,47 @@ public class GridPuzzle {
 		
 		this.agent_x = agent_x;
 		this.agent_y = agent_y;
+		initialiseBlocks();
 	}
 	
+	/**
+	 * Gets the current position.
+	 * @return An array containing the both the robots x and y positions.
+	 */
+	public int[] getCurrentPos() {
+		return new int[] {this.agent_x, this.agent_y};
+	}
 	
+	/**
+	 * Sets the current position.
+	 */
+	public void setCurrentPos(int x, int y) {
+		this.agent_x = x;
+		this.agent_y = y;
+	}
 	
+	/**
+	 * Applies a move to the robot.
+	 * @param move The move to make.
+	 */
 	public void makeMove(GridMove move) {
 		if(isValidMove(move)) {
-			
+			setCurrentPos(agent_x + move.x_move, agent_y + move.y_move);
 		}
+	}
+	
+	/**
+	 * A grid puzzle with a random agent position.
+	 * @param width The desired width of the grid puzzle.
+	 * @param height The desired height of the grid puzzle.
+	 * @return Returns a new grid puzzle with set width and height and a random agent position.
+	 */
+	public static GridPuzzle randomGridPuzzle(int width, int height) {
+		Random RANDOM = new Random();
+		int agent_x = RANDOM.nextInt(width);
+		int agent_y = RANDOM.nextInt(height);
+		
+		return new GridPuzzle(width, height, agent_x, agent_y);
 	}
 	
 	/**
@@ -81,31 +118,89 @@ public class GridPuzzle {
 	 * @return Returns whether or not the move is valid.
 	 */
 	public boolean isValidMove(GridMove move) {
+		int new_x = agent_x + move.x_move;
+		int new_y = agent_y + move.y_move;
 		
-		if(move.x_move > width || move.x_move < width ) {
+		if(new_x <= 0 || new_y <= 0) {
 			return false;
-		} else if(move.y_move > height || move.y_move < height) {
+		} else if(new_x > width || new_y > height) {
+			return false;
+		} else if(this.isBlocked(agent_x, agent_y, move)) {
+			System.out.println("This path is blocked!");
 			return false;
 		}
 		
 		return true;
 	}
 	
+	/**
+	 * Initialises all the blocks on the grid.
+	 */
+	private void initialiseBlocks(){
+		blocks = new ArrayList<Block<GridMove>>();
+ 
+		blocks.add(new Block<GridMove>(2,1,GridMove.DOWN));
+		blocks.add(new Block<GridMove>(3,1,GridMove.RIGHT));
+		blocks.add(new Block<GridMove>(4,1,GridMove.LEFT));
+		blocks.add(new Block<GridMove>(1,2,GridMove.DOWN));
+		blocks.add(new Block<GridMove>(2,2,GridMove.UP));
+		blocks.add(new Block<GridMove>(1,3,GridMove.UP));
+		blocks.add(new Block<GridMove>(3,3,GridMove.RIGHT));
+		blocks.add(new Block<GridMove>(4,3,GridMove.LEFT));
+		blocks.add(new Block<GridMove>(4,3,GridMove.DOWN));
+		blocks.add(new Block<GridMove>(6,3,GridMove.UP));
+		blocks.add(new Block<GridMove>(4,4,GridMove.UP));
+		blocks.add(new Block<GridMove>(7,4,GridMove.DOWN));
+		blocks.add(new Block<GridMove>(2,5,GridMove.DOWN));
+		blocks.add(new Block<GridMove>(3,5,GridMove.DOWN));
+		blocks.add(new Block<GridMove>(5,5,GridMove.DOWN));
+		blocks.add(new Block<GridMove>(1,6,GridMove.DOWN));
+		blocks.add(new Block<GridMove>(2,6,GridMove.UP));
+		blocks.add(new Block<GridMove>(3,6,GridMove.UP));
+		blocks.add(new Block<GridMove>(5,6,GridMove.UP));
+		blocks.add(new Block<GridMove>(3,6,GridMove.RIGHT));
+		blocks.add(new Block<GridMove>(6,6,GridMove.RIGHT));
+		blocks.add(new Block<GridMove>(4,6,GridMove.LEFT));
+		blocks.add(new Block<GridMove>(7,6,GridMove.LEFT));
+		blocks.add(new Block<GridMove>(1,7,GridMove.UP));
+		blocks.add(new Block<GridMove>(5,7,GridMove.DOWN));
+		blocks.add(new Block<GridMove>(6,7,GridMove.DOWN));
+		blocks.add(new Block<GridMove>(5,8,GridMove.UP));
+		blocks.add(new Block<GridMove>(6,8,GridMove.UP));
+	}
+	
+	
+	/**
+	 * Whether or not the path is blocked.
+	 * @return True or false whether the path is blocked.
+	 */
+	public boolean isBlocked(int agent_x, int agent_y, GridMove move) {
+		Block<GridMove> block = new Block<GridMove>(agent_x, agent_y, move);
+		
+		for (Block<GridMove> b : blocks) {
+			if((block.xcoord() == b.xcoord()) && (block.ycoord() == b.ycoord()) && (block.action() == b.action())) {
+				return true;
+			}
+		}
+		
+		return false;
+	}
 	
 	
 	@Override
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
 		
-		for(int i=0; i<height; i++) {
+		for(int i=0; i<=height; i++) {
 			if(i!=0) {
 				sb.append("\n");
 			}
 			for(int j=0; j<=width; j++) {
 				if(i==agent_y && j==agent_x) {
-					
+					sb.append("x ");
 				}
-				if(i!=0) {
+				
+				if(i!=0 && !(i==agent_y && j==agent_x)) {
 					sb.append("| ");
 				}
 				
@@ -127,8 +222,9 @@ public class GridPuzzle {
 	
 	// Testing
 	public static void main(String[] args) {
-		GridPuzzle gp = new GridPuzzle(5, 5, 1, 2);
-		System.out.println(gp.toString());
+		//GridPuzzle gp = new GridPuzzle(8, 10, 3, 2);
+		GridPuzzle gp = GridPuzzle.randomGridPuzzle(5, 5);
+		System.out.println(gp);
 	}
 	
 	
