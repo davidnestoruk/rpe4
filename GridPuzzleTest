@@ -1,4 +1,4 @@
-package gridpuzzle;
+package gridPuzzle;
 
 import gridpuzzle.GridPuzzle.GridMove;
 
